@@ -6,22 +6,28 @@ on:
   pull_request:
     branches: [ master ]
 
+
+# runs:
+#   using: 'node21'
+#   main: 'index.html'
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18.x]
 
+
     steps:
-    # - uses: actions/checkout@v2
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v2
+    # - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        # node-version: ${{ matrix.node-version }}
+        node-version: '21'
     - run: npm install
     - run: npm run build-prod
     - run: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
